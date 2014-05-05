@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>title</title>
+        <link rel="stylesheet" type="text/css" href="css/custom.css">
+        <script src="jquery.min.js"></script>
+        <script>
+        function streamtitle(channel, mode){
+            var channel_name = channel;
+            $.ajax({
+                url: 'https://api.twitch.tv/kraken/channels/' + channel_name,
+                type: 'GET',
+                dataType: 'jsonp',
+                contentType: 'application/json',
+                mimeType: 'application/vnd.twitchtv.v2+json',
+                success: function(json_result) {
+                    $(mode).append('<tr><td><img src="http://static-cdn.jtvnw.net/previews-ttv/live_user_' + channel_name + '-192x120.jpg"></td><td style="text-align: center; font-weight: bold;"><img src="' + json_result.logo + '" width="100px" height="100px"><br>' + channel_name + '</td><td>' + json_result.status + '<br>' + '<p><strong>Playing:</strong> ' + json_result.game + '</p></td></tr>');
+                    //$('.online').append('<td><img src="' + json_result.logo + '" width="125px" height="125px">' + '<br>');
+                    //$('.online').append(channel_name + '</td><td>');
+                    //$('.online').append(json_result.status + '<br>');
+                    //$('.online').append(json_result.game + '</td></tr>');
+                }
+            });
+        }
+
+
+        function isonline(channel) {
+            var channel_name = channel;
+            $.ajax({
+                url: 'https://api.twitch.tv/kraken/streams/' + channel_name,
+                type: 'GET',
+                dataType: 'jsonp',
+                contentType: 'application/json',
+                mimeType: 'application/vnd.twitchtv.v2+json',
+                success: function(json_result) {
+                    $('#stream_status_one').text(json_result.stream);
+                    if (json_result.stream == null) {
+                       streamtitle(channel_name, '.offline');
+                    } else {
+                        streamtitle(channel_name, '.online');
+                    }
+                }
+            });
+    };
+        </script>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    </head>
+    <body onload="isonline('rxysurfchic'); isonline('hellokellylink'); isonline('lonestarclash'); isonline('ongamenet')">
+        <div class="container">
+            <h1 class="title">Gamer Girl Streams</h1>
+            <h2>Online</h2>
+            <table class="online">
+                <tr><td>Preview</td><td>Streamer</td><td>Title</td></tr>
+            </table>
+            <h2>Offline</h2>
+            <table class="offline">
+                <tr><td>Preview</td><td>Streamer</td><td>Title</td></tr>
+            </table>
+        </div>
+    </body>
+</html>
