@@ -53,19 +53,19 @@
 
         function listonline() {
             $.ajax({
-                url: 'https://api.twitch.tv/kraken/streams/?channel=smixity,dexter_bl,pooksie,lunalovebad,sovitia,rainicorn,princezzxdiana,xminks,lucyyfurr,aureylian,alinity,rxysurfchic,hellokellylink,bamfxo,legendarylea,budobo,rainburst,rabbitbong,justawls,alliewh33lz,Jenabella,phorxy,sajedene,ariablarg',
+                url: 'https://api.twitch.tv/kraken/streams/?channel=luinbariel,caitersgoncait,magical_leoplurodon,kixri,lilmamacita,gankfirstgaming,katixxia,zombiunicorn,chixytv,lucahjins,itshafu,madiscone,smixity,dexter_bl,pooksie,lunalovebad,sovitia,rainicorn,princezzxdiana,xminks,lucyyfurr,aureylian,alinity,rxysurfchic,hellokellylink,bamfxo,legendarylea,budobo,rainburst,rabbitbong,justawls,alliewh33lz,Jenabella,phorxy,sajedene,ariablarg',
                 type: 'GET',
                 dataType: 'jsonp',
                 contentType: 'application/json',
                 mimeType: 'application/vnd.twitchtv.v2+json',
                 success: function(json_result) {
                     if (json_result._total == 0) {
-                        $('.online').append('No streamers currently online. Check back later!');
+                        $('.nostreams').append('No streamers currently online. Check back later!');
                     }
                         for (index = 0; index < json_result.streams.length; index++) {
                             channel_name = json_result.streams[index].channel.name;
                             id = json_result.streams[index]
-                            $('.online').append('<table class="table table-bordered"><tr><td>Preview</td><td>Streamer</td><td>Title</td><td>Viewers</td></tr><tr><td><a target="_blank" href="http://twitch.tv/' + channel_name + '"><img src="http://static-cdn.jtvnw.net/previews-ttv/live_user_' + channel_name + '-192x120.jpg"></a></td><td style="text-align: center; font-weight: bold;"><img src="' + id.channel.logo + '" width="100px" height="100px"><br>' + channel_name + '</td><td class="col-md-8">' + id.channel.status +  '<br>' + '<p><strong>Playing:</strong> ' + id.game + '</p></td><td>' + id.viewers + '</td></tr></table>');
+                            $('.online').append('<tr><td><a target="_blank" href="http://twitch.tv/' + channel_name + '"><img src="http://static-cdn.jtvnw.net/previews-ttv/live_user_' + channel_name + '-192x120.jpg"></a></td><td style="text-align: center; font-weight: bold;"><img src="' + id.channel.logo + '" width="100px" height="100px"><br>' + channel_name + '</td><td class="col-md-8">' + id.channel.status +  '<br>' + '<p><strong>Playing:</strong> ' + id.game + '</p></td><td>' + id.viewers + '</td></tr>');
                         }
                 }
             });
@@ -80,12 +80,15 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     </head>
-    <body style="background-color: #C4C9DF;" onload="listonline(); checkifoffline('rxysurfchic'); checkifoffline('hellokellylink'); checkifoffline('alinity'); checkifoffline('bamfxo'); checkifoffline('legendarylea'); checkifoffline('smixity'); checkifoffline('rainicorn'); checkifoffline('budobo'); checkifoffline('rainburst'); checkifoffline('rabbitbong'); checkifoffline('justawls'); checkifoffline('aureylian'); checkifoffline('xminks'); checkifoffline('princezzxdiana'); checkifoffline('ariablarg'); checkifoffline('alliewh33lz'); checkifoffline('Jenabella'); checkifoffline('phorxy'); checkifoffline('lucyyfurr'); checkifoffline('sovitia'); checkifoffline('lunalovebad'); checkifoffline('pooksie'); checkifoffline('dexter_bl'); checkifoffline('sajedene')">
+    <body style="background-color: #C4C9DF;" onload="listonline(); checkifoffline('rxysurfchic'); checkifoffline('hellokellylink'); checkifoffline('alinity'); checkifoffline('bamfxo'); checkifoffline('legendarylea'); checkifoffline('kixri'); checkifoffline('luinbariel'); checkifoffline('lilmamacita'); checkifoffline('gankfirstgaming'); checkifoffline('katixxia'); checkifoffline('chixytv'); checkifoffline('zombiunicorn'); checkifoffline('caitersgoncait'); checkifoffline('lucahjins'); checkifoffline('smixity'); checkifoffline('rainicorn'); checkifoffline('budobo'); checkifoffline('rainburst'); checkifoffline('magical_leoplurodon'); checkifoffline('rabbitbong'); checkifoffline('itshafu'); checkifoffline('justawls'); checkifoffline('aureylian'); checkifoffline('xminks'); checkifoffline('princezzxdiana'); checkifoffline('ariablarg'); checkifoffline('alliewh33lz'); checkifoffline('Jenabella'); checkifoffline('phorxy'); checkifoffline('lucyyfurr'); checkifoffline('sovitia'); checkifoffline('lunalovebad'); checkifoffline('pooksie'); checkifoffline('dexter_bl'); checkifoffline('madiscone'); checkifoffline('sajedene')">
         <div class="header"><h1 class="title">Gamer Girl Streams</h1></div>
         <div class="container">
-            <p>A list of gamer girls streaming from Twitch.tv and other streaming sites. Let us know who your favourite girl gamers are and show some support by visiting their twitch.tv page.</p><p>Let us know of any female gamers who stream that we should add to this list!</p>
+            <p>A list of gamer girls streaming from Twitch.tv and other streaming sites. Let us know who your favourite girl gamers are and show some support by visiting their twitch.tv page.</p><p>To add a stream, send us an email to <a href="mailto:addstream@gamergirlstreams.com">addstream@gamergirlstreams.com</a>.</p>
             <h2>Online</h2>
-            <div class="online">
+            <div class="nostreams">
+            <table class="online table table-bordered">
+                <tr><td>Preview</td><td>Streamer</td><td>Title</td><td>Viewers</td></tr>
+            </table>
             </div>
             <h2>Offline</h2>
             <table class="offline table table-bordered">
