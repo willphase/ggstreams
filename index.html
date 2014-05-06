@@ -3,12 +3,29 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-        <title>title</title>
+        <title>Gamer Girl Streams</title>
+        <meta name="description" content="A list of the top girl gamers currently streaming online on twitch and other streaming sites." />
+        <link href="css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="css/custom.css">
         <link href='http://fonts.googleapis.com/css?family=Playfair+Display' rel='stylesheet' type='text/css'>
         <script src="jquery.min.js"></script>
         <script>
-        function streamtitle(channel, mode){
+        function checkifoffline(channel) {
+            $.ajax({
+                url: 'https://api.twitch.tv/kraken/streams/' + channel,
+                type: 'GET',
+                dataType: 'jsonp',
+                contentType: 'application/json',
+                mimeType: 'application/vnd.twitchtv.v2+json',
+                success: function(json_result) {
+                    if (json_result.stream == null) {
+                        listoffline(channel);
+                    }
+                }
+            });
+        }
+        
+        function listoffline(channel){
             var channel_name = channel;
             $.ajax({
                 url: 'https://api.twitch.tv/kraken/channels/' + channel_name,
@@ -17,36 +34,33 @@
                 contentType: 'application/json',
                 mimeType: 'application/vnd.twitchtv.v2+json',
                 success: function(json_result) {
-                    $(mode).append('<tr><td><img src="http://static-cdn.jtvnw.net/previews-ttv/live_user_' + channel_name + '-192x120.jpg"></td><td style="text-align: center; font-weight: bold;"><img src="' + json_result.logo + '" width="100px" height="100px"><br>' + channel_name + '</td><td>' + json_result.status + '<br>' + '<p><strong>Playing:</strong> ' + json_result.game + '</p></td></tr>');
-                    //$('.online').append('<td><img src="' + json_result.logo + '" width="125px" height="125px">' + '<br>');
-                    //$('.online').append(channel_name + '</td><td>');
-                    //$('.online').append(json_result.status + '<br>');
-                    //$('.online').append(json_result.game + '</td></tr>');
+                        $('.offline').append('<tr><td><a target="_blank" href="http://twitch.tv/' + channel_name + '"><img src="http://static-cdn.jtvnw.net/previews-ttv/live_user_' + channel_name + '-192x120.jpg"></a></td><td style="text-align: center; font-weight: bold;"><img src="' + json_result.logo + '" width="100px" height="100px"><br>' + channel_name + '</td><td class="col-md-8">' + json_result.status +  '<br>' + '<p><strong>Playing:</strong> ' + json_result.game + '</p></td><td>Offline</td></tr>');
                 }
             });
         }
         
 
-        function isonline(channel) {
-            var channel_name = channel;
+        function listonline() {
             $.ajax({
-                url: 'https://api.twitch.tv/kraken/streams/' + channel_name,
+                url: 'https://api.twitch.tv/kraken/streams/?channel=dexter_bl,pooksie,lunalovebad,sovitia,rainicorn,princezzxdiana,xminks,lucyyfurr,aureylian,alinity,rxysurfchic,hellokellylink,bamfxo,legendarylea,budobo,rainburst,rabbitbong,justawls,alliewh33lz,Jenabella,phorxy,sajedene,ariablarg',
                 type: 'GET',
                 dataType: 'jsonp',
                 contentType: 'application/json',
                 mimeType: 'application/vnd.twitchtv.v2+json',
                 success: function(json_result) {
-                    $('#stream_status_one').text(json_result.stream);
-                    if (json_result.stream == null) {
-                       streamtitle(channel_name, '.offline');
-                    } else {
-                        streamtitle(channel_name, '.online');
+                    if (json_result._total == 0) {
+                        $('.online').append('No streamers currently online. Check back later!');
                     }
+                        for (index = 0; index < json_result.streams.length; index++) {
+                            channel_name = json_result.streams[index].channel.name;
+                            id = json_result.streams[index]
+                            $('.online').append('<table class="table table-bordered"><tr><td>Preview</td><td>Streamer</td><td>Title</td><td>Viewers</td></tr><tr><td><a target="_blank" href="http://twitch.tv/' + channel_name + '"><img src="http://static-cdn.jtvnw.net/previews-ttv/live_user_' + channel_name + '-192x120.jpg"></a></td><td style="text-align: center; font-weight: bold;"><img src="' + id.channel.logo + '" width="100px" height="100px"><br>' + channel_name + '</td><td class="col-md-8">' + id.channel.status +  '<br>' + '<p><strong>Playing:</strong> ' + id.game + '</p></td><td>' + id.viewers + '</td></tr></table>');
+                        }
                 }
             });
         };
+        //; 
         </script>
-        <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -55,17 +69,16 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     </head>
-    <body style="background-color: #C4C9DF;" onload="isonline('rxysurfchic'); isonline('hellokellylink'); isonline('lonestarclash'); isonline('ongamenet')">
+    <body style="background-color: #C4C9DF;" onload="listonline(); checkifoffline('rxysurfchic'); checkifoffline('hellokellylink'); checkifoffline('alinity'); checkifoffline('bamfxo'); checkifoffline('legendarylea'); checkifoffline('rainicorn'); checkifoffline('budobo'); checkifoffline('rainburst'); checkifoffline('rabbitbong'); checkifoffline('justawls'); checkifoffline('aureylian'); checkifoffline('xminks'); checkifoffline('princezzxdiana'); checkifoffline('ariablarg'); checkifoffline('alliewh33lz'); checkifoffline('Jenabella'); checkifoffline('phorxy'); checkifoffline('lucyyfurr'); checkifoffline('sovitia'); checkifoffline('lunalovebad'); checkifoffline('pooksie'); checkifoffline('dexter_bl'); checkifoffline('sajedene')">
         <div class="header"><h1 class="title">Gamer Girl Streams</h1></div>
         <div class="container">
             
             <h2>Online</h2>
-            <table class="online">
-                <tr><td>Preview</td><td>Streamer</td><td>Title</td></tr>
-            </table>
+            <div class="online">
+            </div>
             <h2>Offline</h2>
-            <table class="offline">
-                <tr><td>Preview</td><td>Streamer</td><td>Title</td></tr>
+            <table class="offline table table-bordered">
+                <tr><td>Preview</td><td>Streamer</td><td>Title</td><td>Viewers</td></tr>
             </table>
         </div>
     </body>
