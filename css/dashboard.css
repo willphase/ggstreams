@@ -1,0 +1,86 @@
+/*
+ * Base structure
+ */
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+  background-color: #C4C9DF;
+}
+
+.header {
+  background-color: #8892BF;
+  padding: 20px;
+}
+
+.title {
+  text-align: center;
+  color:#fff;
+  font-family: 'Playfair Display', serif;
+  margin: 0;
+}
+
+
+/*
+ * Global add-ons
+ */
+
+.sub-header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+
+/*
+ * Sidebar
+ */
+
+/* Hide for mobile, show later */
+
+
+/*
+ * Main content
+ */
+
+.main {
+}
+
+@media (min-width: 768px) {
+  .main {
+    padding-right: 20px;
+    padding-left: 40px;
+  }
+}
+.main .page-header {
+  margin-top: 0;
+}
+
+
+/*
+ * Placeholder dashboard ideas
+ */
+
+.placeholders {
+  margin-bottom: 10px;
+}
+.placeholders h4 {
+  margin-bottom: 0;
+}
+.placeholder {
+  margin-bottom: 10px;
+  width: 300px;
+  height: 340px;
+}
+.description {
+  padding: 8px;
+  background: #fff;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.18);
+}
+
+.offline.row.placeholders {
+  margin-bottom: 30px;
+}
+
+.row.load {
+  text-align: center;
+  margin-bottom: 30px;
+}
