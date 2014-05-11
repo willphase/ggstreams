@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Gamer Girl Streams</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A list of the top girl gamers currently streaming online on twitch and other streaming sites." />
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href='http://fonts.googleapis.com/css?family=Playfair+Display' rel='stylesheet' type='text/css'>
+    <script>
+    var sortable;
+
+        function abbreviateNumber(value) {
+    var newValue = value;
+    if (value >= 1000) {
+        var suffixes = ["", "k", "m", "b","t"];
+        var suffixNum = Math.floor( (""+value).length/3 );
+        var shortValue = '';
+        for (var precision = 2; precision >= 1; precision--) {
+            shortValue = parseFloat( (suffixNum != 0 ? (value / Math.pow(1000,suffixNum) ) : value).toPrecision(precision));
+            var dotLessShortValue = (shortValue + '').replace(/[^a-zA-Z 0-9]+/g,'');
+            if (dotLessShortValue.length <= 2) { break; }
+        }
+        if (shortValue % 1 != 0)  shortNum = shortValue.toFixed(1);
+        newValue = shortValue+suffixes[suffixNum];
+    }
+    return newValue;
+}
+
+    function addCommas(nStr)
+    {
+        nStr += '';
+        x = nStr.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        return x1 + x2;
+    }
+
+
+    function checkifoffline(channel) {
+            $.ajax({
+                url: 'https://api.twitch.tv/kraken/streams/' + channel + '?client_id=94gmmpgb8jfx4welolybvg91t4uko4x',
+                type: 'GET',
+                dataType: 'jsonp',
+                contentType: 'application/json',
+                mimeType: 'application/vnd.twitchtv.v2+json',
+                success: function(json_result) {
+                    if (json_result.stream == null) {
+                        listoffline(channel);
+                    }
+                    
+                }
+            });
+        }
+
+
+
+        function listoffline(channel){
+
+          for (index = 0; index < channel.length; index++) {
+            channel_name = channel[index];
+            var sortable = [];
+            $.ajax({
+                url: 'https://api.twitch.tv/kraken/channels/' + channel_name,
+                type: 'GET',
+                dataType: 'jsonp',
+                async: false,
+                contentType: 'application/json',
+                mimeType: 'application/vnd.twitchtv.v2+json',
+                success: function(json_result) {
+                        if (json_result.status.length > 40) {
+                                json_result.status = json_result.status.substring(0, 40) + '...';
+                            }
+                        $('.online').append('<div class="col-xs-6 col-sm-3 placeholder"><a target="_blank" href="http://www.twitch.tv/' + channel_name + '"><img src="http://static-cdn.jtvnw.net/previews-ttv/live_user_' + channel_name + '-320x200.jpg" class="preview img-responsive" alt="Generic placeholder thumbnail"></a><div class="description"><img style="float: left; margin-top: 2px; margin-right: 5px; margin-left: 2px;" src="' + json_result.logo + '" width="50px" height="50px"><p><strong> <a target="_blank" href="http://www.twitch.tv/' + channel_name + '">' + channel_name + '</a></strong></p><p>Views: ' + abbreviateNumber(json_result.views) +'</p><p>' + json_result.status + '</p></div></div>');
+                        sortable.push(json_result.views);
+
+                } 
+            });
+          }
+        }
+
+    function clearBox() {
+        $('.online').html("");
+        $('.page-header').text("All Girl Gamers");
+    }
+
+    function clearBoxOnline() {
+        $('.online').html("");
+        $('.row.load').hide();
+        $('.page-header').text("All Girl Gamers");
+    }
+
+    var param1var = getQueryVariable("stream");
+
+    function getQueryVariable(variable) {
+      var query = window.location.search.substring(1);
+      var vars = query.split("&");
+      for (var i=0;i<vars.length;i++) {
+        var pair = vars[i].split("=");
+        if (pair[0] == variable) {
+          return pair[1];
+        }
+      } 
+    }
+
+    function liststream() {
+        $('.page-header').text(param1var);
+        $('.online').append('<object class="img img-responsive" type="application/x-shockwave-flash" height="658" width="1080" id="live_embed_player_flash" data="http://www.twitch.tv/widgets/live_embed_player.swf?channel=' + param1var + '" bgcolor="#000000"><param  name="allowFullScreen" value="true" /><param  name="allowScriptAccess" value="always" /><param  name="allowNetworking" value="all" /><param  name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf" /><param  name="flashvars" value="hostname=www.twitch.tv&channel=' + param1var + '&auto_play=true&start_volume=25" /></object>');
+    }
+
+    function listchat() {
+        $('.chat').append('<iframe frameborder="0" scrolling="no" id="chat_embed" src="http://twitch.tv/chat/embed?channel=' + param1var + '&amp;popout_chat=true" height="500" width="300"></iframe>')
+    }
+
+    </script>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/dashboard.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Gamer Girl Streams</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Help</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active"><a href="http://www.gamergirlstreams.com">Online Now</a></li>
+            <li><a onclick="checkifoffline(['cendahlia', 'gankfirstgaming', 'ilysuiteheart']); alert(sortable)" href="#">All Girl Gamers</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a href="https://twitter.com/GamerGirlStream">Twitter</a></li>
+            <li><a href="https://www.facebook.com/gamergirlstreams">Facebook</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-6 col-sm-offset-3 col-md-7 col-md-offset-2 main">
+          <h1 class="page-header"></small></h1>
+            <div class="online row placeholders">
+            </div>
+        </div>
+        <div class="col-sm-3 col-md-3">
+            <div style="margin-top: 73px;"></div>
+            <div class="chat row placeholders">
+            </div>
+            
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/docs.min.js"></script>
+  </body>
+</html>
