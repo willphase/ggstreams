@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>>Top Streams | Gamer Girl Streams</title>
+    <title>Top Streams | Gamer Girl Streams</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -105,7 +105,7 @@
                 sortable.sort(function(a, b){
                  return b.views - a.views
                 })
-                $('.online').append('<div class="col-xs-6 col-sm-3 placeholder"><a target="_blank" href="http://www.twitch.tv/' + sortable[index].name + '"><img src="http://static-cdn.jtvnw.net/previews-ttv/live_user_' + sortable[index].name + '-320x200.jpg" class="preview img-responsive" alt="Generic placeholder thumbnail"></a><div class="description"><img style="float: left; margin-top: 2px; margin-right: 5px; margin-left: 2px;" src="' + sortable[index].logo + '" width="50px" height="50px"><p><strong> <a target="_blank" href="http://www.twitch.tv/' + sortable[index].name + '">' + sortable[index].name + '</a></strong></p><p>Views: ' + addCommas(sortable[index].views) +'</p><p>' + sortable[index].status + '</p></div></div>');
+                $('.online').append('<div class="col-xs-6 col-sm-3 placeholder"><a href="stream" onclick="javascript:window.location.href=\'stream.html?stream=' + sortable[index].name + '\'; return false;"><img src="http://static-cdn.jtvnw.net/previews-ttv/live_user_' + sortable[index].name + '-320x200.jpg" class="preview img-responsive" alt="Generic placeholder thumbnail"></a><div class="description"><img style="float: left; margin-top: 2px; margin-right: 5px; margin-left: 2px;" src="' + sortable[index].logo + '" width="50px" height="50px"><p><strong> <a href="stream" onclick="javascript:window.location.href=\'stream.html?stream=' + sortable[index].name + '\'; return false;">' + sortable[index].name + '</a></strong></p><p>Views: ' + addCommas(sortable[index].views) +'</p><p>' + sortable[index].status + '</p></div></div>');
             }
         }
 
