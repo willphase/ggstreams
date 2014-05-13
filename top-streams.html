@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>All Streams | Gamer Girl Streams</title>
+    <title>>Top Streams | Gamer Girl Streams</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -24,7 +24,8 @@
       ga('create', 'UA-50686220-1', 'gamergirlstreams.com');
       ga('send', 'pageview');
     </script>
-<script>
+  <script>
+   sortable = [];
 
     String.prototype.trimToLength = function(m) {
     return (this.length > m) 
@@ -62,6 +63,7 @@
         return x1 + x2;
     }
 
+
         function clearBox() {
             $('.online').html("");
             $('.page-header').text("All Girl Gamers");
@@ -73,41 +75,39 @@
             $('.page-header').text("All Girl Gamers");
         }
 
-    var param1var = getQueryVariable("stream");
-
-    function getQueryVariable(variable) {
-      var query = window.location.search.substring(1);
-      var vars = query.split("&");
-      for (var i=0;i<vars.length;i++) {
-        var pair = vars[i].split("=");
-        if (pair[0] == variable) {
-          return pair[1];
-        }
-      } 
-    }
-
-    function liststream() {
-        $('.page-header').text(param1var);
-        $('.online').append('<object class="img img-responsive" type="application/x-shockwave-flash" height="658" width="10580" id="live_embed_player_flash" data="http://www.twitch.tv/widgets/live_embed_player.swf?channel=' + param1var + '" bgcolor="#000000"><param  name="allowFullScreen" value="true" /><param  name="allowScriptAccess" value="always" /><param  name="allowNetworking" value="all" /><param  name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf" /><param  name="flashvars" value="hostname=www.twitch.tv&channel=' + param1var + '&auto_play=true&start_volume=25" /></object>');
-    }
-
-    function listchat() {
-        $('.chat').append('<iframe frameborder="0" scrolling="no" id="chat_embed" src="http://twitch.tv/chat/embed?channel=' + param1var + '&amp;popout_chat=true" height="858" width="300"></iframe>')
-    }
-
-    setInterval (function viewercount() {
+        function listoffline(channel){
+          for (index = 0; index < channel.length; index++) {
+            channel_name = channel[index];
+            num = 0;
             $.ajax({
-                url: 'https://api.twitch.tv/kraken/streams/' + param1var,
+                url: 'https://api.twitch.tv/kraken/channels/' + channel_name + '?client_id=94gmmpgb8jfx4welolybvg91t4uko4x',
                 type: 'GET',
+                async: false,
                 dataType: 'jsonp',
                 contentType: 'application/json',
                 mimeType: 'application/vnd.twitchtv.v2+json',
                 success: function(json_result) {
-                    $('.viewcount').text('Viewers: ' + addCommas(json_result.stream.viewers));
-                    $('#streamname').html(param1var + ' <small style="margin-left: 10px;">Playing: ' + json_result.stream.game + '</small>');
-                }
+                        if (json_result.status.length > 40) {
+                                json_result.status = json_result.status.substring(0, 40) + '...';
+                            }
+                        sortable[num] = {name: json_result.name, views: json_result.views, logo: json_result.logo, status: json_result.status};
+                        num++;
+                        //sortable.push(json_result.views);
+                        //alert(sortable[index].name);
+                        if (num == 84) { listall(); }
+                } 
             });
-      }, 10000);
+           }
+        }
+
+                function listall() {
+            for (index = 0; index < 10; index++) {
+                sortable.sort(function(a, b){
+                 return b.views - a.views
+                })
+                $('.online').append('<div class="col-xs-6 col-sm-3 placeholder"><a target="_blank" href="http://www.twitch.tv/' + sortable[index].name + '"><img src="http://static-cdn.jtvnw.net/previews-ttv/live_user_' + sortable[index].name + '-320x200.jpg" class="preview img-responsive" alt="Generic placeholder thumbnail"></a><div class="description"><img style="float: left; margin-top: 2px; margin-right: 5px; margin-left: 2px;" src="' + sortable[index].logo + '" width="50px" height="50px"><p><strong> <a target="_blank" href="http://www.twitch.tv/' + sortable[index].name + '">' + sortable[index].name + '</a></strong></p><p>Views: ' + addCommas(sortable[index].views) +'</p><p>' + sortable[index].status + '</p></div></div>');
+            }
+        }
 
     function listonline() {
             $.ajax({
@@ -135,7 +135,7 @@
     </script>
 </head>
 
-<body onload="liststream(); listchat(); listonline();">
+<body onload="clearBox(); listoffline(['royalbabe91','fateWinters','takarita324','arykitty','thebeeduck','aimzatchu','kaitlyn','kaiidira','yoonie','kaypealol','cendahlia','monstermashpixxy','blikkca','misswng5','mrsviolence','ilysuiteheart','jennyeatsbabies','bellatje','delovely','cyanidecherry','llanna','kireiautumn','rinadork','mittenkiss','tarababcock','caiyth','kayji','seipk','jennythesquirrel','sarastarrs2','bonniedoll','kuteypanda','deernadia','sonyatheevil','avajaijai','asiaamore','dewtroid','geekremix','behkuhtv','kaylovespie','sllverlady1','uminokaiju','kixri','fatalityxo','asytra','theladyex','lynkiis','suushisam','sirithre','jaggerous','luinbariel','caitersgoncait','magical_leoplurodon','lilmamacita','gankfirstgaming','katixxia','zombiunicorn','chixytv','lucahjins','itshafu','madiscone','smixity','dexter_bl','pooksie','lunalovebad','sovitia','rainicorn','princezzxdiana','xminks','lucyyfurr','aureylian','alinity','rxysurfchic','hellokellylink','bamfxo','legendarylea','budobo','rainburst','rabbitbong','justawls','alliewh33lz','jenabella','phorxy','sajedene','ariablarg']); listonline()">
 
     <div id="wrapper">
 
@@ -146,7 +146,7 @@
                 </li>
                 <li><a href="/"><span class="glyphicon glyphicon-user"></span>Online</a>
                 </li>
-                <li><a href="all-gamer-girls.html"><span class="glyphicon glyphicon-list"></span>All Gamer Girls</a>
+                <li><a href="#"><span class="glyphicon glyphicon-list"></span>All Gamer Girls</a>
                 </li>
                 <li><a href="top-streams.html"><span class="glyphicon glyphicon-star"></span>Top 10</a>
                 </li>
@@ -163,32 +163,24 @@
         </div>
 
         <!-- Page content -->
-        <div class="video col-sm-7 col-md-8">
+        <div id="page-content-wrapper">
             <div class="content-header">
                 <h1>
                     <a id="menu-toggle" href="#" class="btn btn-default"><i class="icon-reorder"></i></a>
                 </h1>
             </div>
             <div class="content-header second">
-                <h3 id="streamname"></h3>
+                <h3>
+                    All Gamer Girls <small>/ 87 offline</small>
+                </h3>
             </div>
             <!-- Keep all page content within the page-content inset div! -->
-            <div class="inset">
+            <div class="page-content inset">
                 <div class="row">
                     <div class="online row placeholders inset">
                     </div>
-                    <div>
-                      <p class="viewcount" style="float: right; margin-right: 15px; font-weight: bold"></p>
-                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-5 col-md-4">
-            <!-- Keep all page content within the page-content inset div! -->
-                <div class="row">
-                  <div class="chat row placeholders inset">
-                  </div>
-                </div>
         </div>
 
     </div>
