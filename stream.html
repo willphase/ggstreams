@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta property="og:image" content="http://www.gamergirlstreams.com/twitch.png" />
 
-    <title>All Streams | Gamer Girl Streams</title>
+    <title>Stream | Gamer Girl Streams</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -74,6 +75,7 @@
         }
 
     var param1var = getQueryVariable("stream");
+    document.title = param1var + "'s stream | Gamer Girl Streams";
 
     function getQueryVariable(variable) {
       var query = window.location.search.substring(1);
@@ -95,6 +97,22 @@
         $('.chat').append('<iframe frameborder="0" scrolling="no" id="chat_embed" src="http://twitch.tv/chat/embed?channel=' + param1var + '&amp;popout_chat=true" height="858" width="300"></iframe>')
     }
 
+    function streamdesc() {
+            $.ajax({
+                url: 'https://api.twitch.tv/kraken/streams/' + param1var,
+                type: 'GET',
+                dataType: 'jsonp',
+                contentType: 'application/json',
+                mimeType: 'application/vnd.twitchtv.v2+json',
+                success: function(json_result) {
+                    if (json_result.stream.channel.status.length > 40) {
+                        json_result.stream.channel.status = id.channel.status.substring(0, 40) + '...';
+                    }
+                    $('.stream_desc').html('<h4>Description: ' + json_result.stream.channel.status +'</h4>')
+                }
+            });
+      }
+
     setInterval (function viewercount() {
             $.ajax({
                 url: 'https://api.twitch.tv/kraken/streams/' + param1var,
@@ -103,6 +121,7 @@
                 contentType: 'application/json',
                 mimeType: 'application/vnd.twitchtv.v2+json',
                 success: function(json_result) {
+
                     $('.viewcount').text('Viewers: ' + addCommas(json_result.stream.viewers));
                     $('#streamname').html(param1var + ' <small style="margin-left: 10px;">Playing: ' + json_result.stream.game + '</small>');
                 }
@@ -135,8 +154,15 @@
     </script>
 </head>
 
-<body onload="liststream(); listchat(); listonline();">
-
+<body onload="liststream(); listchat(); streamdesc(); listonline();">
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
     <div id="wrapper">
 
         <!-- Sidebar -->
@@ -158,7 +184,7 @@
             </div>
             <div class="about">
                 <h3>About Us</h3>
-                <p>A list of gamer girls streaming from Twitch.tv and other streaming sites. <span class="aboutus">Let us know who your favourite girl gamers are and show some support by visiting their twitch.tv page.</span></p>
+                <p>A list of gamer girls streaming from Twitch.tv and other streaming sites. Let us know who your favourite girl gamers are and show some support by visiting their twitch.tv page.</p>
             </div>
         </div>
 
@@ -166,14 +192,18 @@
         <div class="video col-sm-7 col-md-8">
             <div class="content-header second">
                 <h3 id="streamname"></h3>
+                    <a target="_blank" href="https://twitter.com/GamerGirlStream"><img id="twitter" align="right" src="twitter-icon.png"></a>
+                    <a target="_blank" href="https://www.facebook.com/gamergirlstreams"><img id="fb" align="right" src="fb-icon.png"></a>
             </div>
             <!-- Keep all page content within the page-content inset div! -->
             <div class="inset">
                 <div class="row">
+                    <div class="stream_desc">
+                    </div>
                     <div class="online row placeholders inset">
                     </div>
-                    <div>
-                      <p class="viewcount" style="float: right; margin-right: 15px; font-weight: bold"></p>
+                    <div style="padding-left: 5px;"><div class="fb-like" data-layout="button" data-action="like" data-show-faces="true" data-share="false"></div> this stream
+                      <span class="viewcount" style="float: right; margin-right: 15px; font-weight: bold"></span>
                     </div>
                 </div>
             </div>

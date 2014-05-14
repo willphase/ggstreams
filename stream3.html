@@ -16,14 +16,14 @@
     <!-- Add custom CSS here -->
     <link href="css/custom.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <script>
+    <script>/*
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
       ga('create', 'UA-50686220-1', 'gamergirlstreams.com');
-      ga('send', 'pageview');
+      ga('send', 'pageview'); */
     </script>
 <script>
 
@@ -63,22 +63,6 @@
         return x1 + x2;
     }
 
-    function checkifoffline(channel) {
-            $.ajax({
-                url: 'https://api.twitch.tv/kraken/streams/' + channel,
-                type: 'GET',
-                dataType: 'jsonp',
-                contentType: 'application/json',
-                mimeType: 'application/vnd.twitchtv.v2+json',
-                success: function(json_result) {
-                    if (json_result.stream == null) {
-                        listoffline(channel);
-                        $
-                    }
-                }
-            });
-        }
-
         function clearBox() {
             $('.online').html("");
             $('.page-header').text("All Girl Gamers");
@@ -90,25 +74,42 @@
             $('.page-header').text("All Girl Gamers");
         }
 
+    var param1var = getQueryVariable("stream");
+    document.title = param1var + "'s stream | Gamer Girl Streams";
 
+    function getQueryVariable(variable) {
+      var query = window.location.search.substring(1);
+      var vars = query.split("&");
+      for (var i=0;i<vars.length;i++) {
+        var pair = vars[i].split("=");
+        if (pair[0] == variable) {
+          return pair[1];
+        }
+      } 
+    }
 
-        function listoffline(channel){
-            var channel_name = channel;
+    function liststream() {
+        $('.page-header').text(param1var);
+        $('.online').append('<object class="img img-responsive" type="application/x-shockwave-flash" height="658" width="10580" id="live_embed_player_flash" data="http://www.twitch.tv/widgets/live_embed_player.swf?channel=' + param1var + '" bgcolor="#000000"><param  name="allowFullScreen" value="true" /><param  name="allowScriptAccess" value="always" /><param  name="allowNetworking" value="all" /><param  name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf" /><param  name="flashvars" value="hostname=www.twitch.tv&channel=' + param1var + '&auto_play=true&start_volume=25" /></object>');
+    }
+
+    function listchat() {
+        $('.chat').append('<iframe frameborder="0" scrolling="no" id="chat_embed" src="http://twitch.tv/chat/embed?channel=' + param1var + '&amp;popout_chat=true" height="858" width="300"></iframe>')
+    }
+
+    setInterval (function viewercount() {
             $.ajax({
-                url: 'https://api.twitch.tv/kraken/channels/' + channel_name + '?client_id=94gmmpgb8jfx4welolybvg91t4uko4x',
+                url: 'https://api.twitch.tv/kraken/streams/' + param1var,
                 type: 'GET',
                 dataType: 'jsonp',
                 contentType: 'application/json',
                 mimeType: 'application/vnd.twitchtv.v2+json',
                 success: function(json_result) {
-                        if (json_result.status.length > 40) {
-                                json_result.status = json_result.status.substring(0, 40) + '...';
-                            }
-                        $('.loading').hide();
-                        $('.online').append('<div class="col-xs-6 col-sm-3 placeholder"><a target="_blank" href="http://www.twitch.tv/' + channel_name + '"><img src="http://static-cdn.jtvnw.net/previews-ttv/live_user_' + channel_name + '-320x200.jpg" class="preview img-responsive" alt="Generic placeholder thumbnail"></a><div class="description"><img style="float: left; margin-top: 2px; margin-right: 5px; margin-left: 2px;" src="' + json_result.logo + '" width="50px" height="50px"><p><strong> <a target="_blank" href="http://www.twitch.tv/' + channel_name + '">' + channel_name + '</a></strong></p><p>Views: ' + abbreviateNumber(json_result.views) +'</p><p>' + json_result.status + '</p></div></div>');
+                    $('.viewcount').text('Viewers: ' + addCommas(json_result.stream.viewers));
+                    $('#streamname').html(param1var + ' <small style="margin-left: 10px;">Playing: ' + json_result.stream.game + '</small>');
                 }
             });
-        }
+      }, 10000);
 
     function listonline() {
             $.ajax({
@@ -136,8 +137,15 @@
     </script>
 </head>
 
-<body onload="clearBox(); $('.row.load').show(); checkifoffline('cendahlia'); checkifoffline('roxiedayze'); checkifoffline('monstermashpixxy'); checkifoffline('blikkca'); checkifoffline('misswng5'); checkifoffline('mrsviolence'); checkifoffline('royalbabe91'); checkifoffline('kaiidira'); checkifoffline('fateWinters'); checkifoffline('takarita324'); checkifoffline('kaitlyn'); checkifoffline('ilysuiteheart'); checkifoffline('yoonie'); checkifoffline('jennyeatsbabies'); checkifoffline('thebeeduck'); checkifoffline('arykitty'); checkifoffline('llanna'); checkifoffline('cyanidecherry'); checkifoffline('kayji'); checkifoffline('caiyth'); checkifoffline('kireiautumn'); checkifoffline('rxysurfchic'); checkifoffline('rinadork'); checkifoffline('aimzatchu'); checkifoffline('mittenkiss'); checkifoffline('tarababcock'); checkifoffline('delovely'); checkifoffline('bellatje'); checkifoffline('seipk'); checkifoffline('jennythesquirrel'); checkifoffline('sarastarrs2'); checkifoffline('bonniedoll'); checkifoffline('kuteypanda'); checkifoffline('deernadia'); checkifoffline('sonyatheevil'); checkifoffline('avajaijai'); checkifoffline('asiaamore'); checkifoffline('dewtroid'); checkifoffline('geekremix'); checkifoffline('behkuhtv'); checkifoffline('hellokellylink'); checkifoffline('alinity'); checkifoffline('bamfxo'); checkifoffline('legendarylea'); checkifoffline('kixri'); listonline()">
-
+<body onload="liststream(); listchat(); listonline();">
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
     <div id="wrapper">
 
         <!-- Sidebar -->
@@ -147,7 +155,7 @@
                 </li>
                 <li><a href="/"><span class="glyphicon glyphicon-user"></span>Online</a>
                 </li>
-                <li><a href="#"><span class="glyphicon glyphicon-list"></span>All Gamer Girls</a>
+                <li><a href="all-gamer-girls.html"><span class="glyphicon glyphicon-list"></span>All Gamer Girls</a>
                 </li>
                 <li><a href="top-streams.html"><span class="glyphicon glyphicon-star"></span>Top 10</a>
                 </li>
@@ -164,27 +172,29 @@
         </div>
 
         <!-- Page content -->
-        <div id="page-content-wrapper">
+        <div class="video col-sm-7 col-md-8">
             <div class="content-header second">
-                <h3>
-                    All Gamer Girls <small>/ 87 offline</small>
-                </h3>
+                <h3 id="streamname"></h3>
                     <a target="_blank" href="https://twitter.com/GamerGirlStream"><img id="twitter" align="right" src="twitter-icon.png"></a>
                     <a target="_blank" href="https://www.facebook.com/gamergirlstreams"><img id="fb" align="right" src="fb-icon.png"></a>
             </div>
             <!-- Keep all page content within the page-content inset div! -->
-            <div class="page-content inset">
+            <div class="inset">
                 <div class="row">
-                    <div class="loading">
-                        <img src="loading.gif" height="120" width="128">
-                    </div>
                     <div class="online row placeholders inset">
                     </div>
-                    <div class="row load">
-                        <button onclick="checkifoffline('sllverlady1'); checkifoffline('kaypealol'); checkifoffline('uminokaiju'); checkifoffline('fatalityxo'); checkifoffline('asytra'); checkifoffline('theladyex'); checkifoffline('kaylovespie'); checkifoffline('lynkiis'); checkifoffline('luinbariel'); checkifoffline('suushisam'); checkifoffline('lilmamacita'); checkifoffline('gankfirstgaming'); checkifoffline('katixxia'); checkifoffline('chixytv'); checkifoffline('zombiunicorn'); checkifoffline('jaggerous'); checkifoffline('caitersgoncait'); checkifoffline('sirithre'); checkifoffline('lucahjins'); checkifoffline('smixity'); checkifoffline('rainicorn'); checkifoffline('budobo'); checkifoffline('rainburst'); checkifoffline('magical_leoplurodon'); checkifoffline('rabbitbong'); checkifoffline('itshafu'); checkifoffline('justawls'); checkifoffline('aureylian'); checkifoffline('xminks'); checkifoffline('princezzxdiana'); checkifoffline('ariablarg'); checkifoffline('alliewh33lz'); checkifoffline('jenabella'); checkifoffline('phorxy'); checkifoffline('lucyyfurr'); checkifoffline('sovitia'); checkifoffline('lunalovebad'); checkifoffline('pooksie'); checkifoffline('dexter_bl'); checkifoffline('madiscone'); checkifoffline('sajedene'); $(this).hide(); ga('send', 'event', 'loadstream', 'click');" type="button" class="btn btn-default btn-lg"><span class="loadstream glyphicon glyphicon-repeat"></span> Load More Streams</button>
+                    <div style="padding-left: 5px;"><div class="fb-like" data-layout="button" data-action="like" data-show-faces="true" data-share="false"></div> this stream
+                      <span class="viewcount" style="float: right; margin-right: 15px; font-weight: bold"></span>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="col-sm-5 col-md-4">
+            <!-- Keep all page content within the page-content inset div! -->
+                <div class="row">
+                  <div class="chat row placeholders inset">
+                  </div>
+                </div>
         </div>
 
     </div>

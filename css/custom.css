@@ -47,6 +47,24 @@ body {
   padding: 0px;
 }
 
+.loading {
+  text-align: center;
+}
+
+.stream_desc {
+  margin-left: 5px;
+}
+
+#twitter {
+  margin-top: 10px;
+  margin-right: 25px;
+}
+
+#fb {
+  margin-top: 15px;
+  margin-right: 25px;
+}
+
 .sidebar-nav {
   position: relative;
   top: 0;
@@ -256,7 +274,7 @@ body {
 }
 
 @media (max-height: 759px) {
-   .aboutus {
+   .about {
     display: none;
    }
 }

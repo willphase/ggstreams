@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta property="og:image" content="http://www.gamergirlstreams.com/twitch.png" />
 
     <title>Top Streams | Gamer Girl Streams</title>
 
@@ -64,17 +65,6 @@
     }
 
 
-        function clearBox() {
-            $('.online').html("");
-            $('.page-header').text("All Girl Gamers");
-        }
-
-        function clearBoxOnline() {
-            $('.online').html("");
-            $('.row.load').hide();
-            $('.page-header').text("All Girl Gamers");
-        }
-
         function listoffline(channel){
           for (index = 0; index < channel.length; index++) {
             channel_name = channel[index];
@@ -94,7 +84,10 @@
                         num++;
                         //sortable.push(json_result.views);
                         //alert(sortable[index].name);
-                        if (num == 84) { listall(); }
+                        if (num == 84) {
+                         $('.loading').hide();
+                         listall();
+                        }
                 } 
             });
            }
@@ -135,7 +128,7 @@
     </script>
 </head>
 
-<body onload="clearBox(); listoffline(['royalbabe91','fateWinters', 'roxiedayze','takarita324','arykitty','thebeeduck','aimzatchu','kaitlyn','kaiidira','yoonie','kaypealol','cendahlia','monstermashpixxy','blikkca','misswng5','mrsviolence','ilysuiteheart','jennyeatsbabies','bellatje','delovely','cyanidecherry','llanna','kireiautumn','rinadork','mittenkiss','tarababcock','caiyth','kayji','seipk','jennythesquirrel','sarastarrs2','bonniedoll','kuteypanda','deernadia','sonyatheevil','avajaijai','asiaamore','dewtroid','geekremix','behkuhtv','kaylovespie','sllverlady1','uminokaiju','kixri','fatalityxo','asytra','theladyex','lynkiis','suushisam','sirithre','jaggerous','luinbariel','caitersgoncait','magical_leoplurodon','lilmamacita','gankfirstgaming','katixxia','zombiunicorn','chixytv','lucahjins','itshafu','madiscone','smixity','dexter_bl','pooksie','lunalovebad','sovitia','rainicorn','princezzxdiana','xminks','lucyyfurr','aureylian','alinity','rxysurfchic','hellokellylink','bamfxo','legendarylea','budobo','rainburst','rabbitbong','justawls','alliewh33lz','jenabella','phorxy','sajedene','ariablarg']); listonline()">
+<body onload="listoffline(['royalbabe91','fateWinters', 'roxiedayze','takarita324','arykitty','thebeeduck','aimzatchu','kaitlyn','kaiidira','yoonie','kaypealol','cendahlia','monstermashpixxy','blikkca','misswng5','mrsviolence','ilysuiteheart','jennyeatsbabies','bellatje','delovely','cyanidecherry','llanna','kireiautumn','rinadork','mittenkiss','tarababcock','caiyth','kayji','seipk','jennythesquirrel','sarastarrs2','bonniedoll','kuteypanda','deernadia','sonyatheevil','avajaijai','asiaamore','dewtroid','geekremix','behkuhtv','kaylovespie','sllverlady1','uminokaiju','kixri','fatalityxo','asytra','theladyex','lynkiis','suushisam','sirithre','jaggerous','luinbariel','caitersgoncait','magical_leoplurodon','lilmamacita','gankfirstgaming','katixxia','zombiunicorn','chixytv','lucahjins','itshafu','madiscone','smixity','dexter_bl','pooksie','lunalovebad','sovitia','rainicorn','princezzxdiana','xminks','lucyyfurr','aureylian','alinity','rxysurfchic','hellokellylink','bamfxo','legendarylea','budobo','rainburst','rabbitbong','justawls','alliewh33lz','jenabella','phorxy','sajedene','ariablarg']); listonline()">
 
     <div id="wrapper">
 
@@ -158,7 +151,7 @@
             </div>
             <div class="about">
                 <h3>About Us</h3>
-                <p>A list of gamer girls streaming from Twitch.tv and other streaming sites. <span class="aboutus">Let us know who your favourite girl gamers are and show some support by visiting their twitch.tv page.</span></p>
+                <p>A list of gamer girls streaming from Twitch.tv and other streaming sites. Let us know who your favourite girl gamers are and show some support by visiting their twitch.tv page.</p>
             </div>
         </div>
 
@@ -168,10 +161,15 @@
                 <h3>
                     Top 10 Streams <small>Sorted by most viewed</small>
                 </h3>
+                    <a target="_blank" href="https://twitter.com/GamerGirlStream"><img id="twitter" align="right" src="twitter-icon.png"></a>
+                    <a target="_blank" href="https://www.facebook.com/gamergirlstreams"><img id="fb" align="right" src="fb-icon.png"></a>
             </div>
             <!-- Keep all page content within the page-content inset div! -->
             <div class="page-content inset">
                 <div class="row">
+                    <div class="loading">
+                        <img src="loading.gif" height="120" width="128">
+                    </div>
                     <div class="online row placeholders inset">
                     </div>
                 </div>
