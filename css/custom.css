@@ -254,3 +254,9 @@ body {
   height: 658px;
   }
 }
+
+@media (max-height: 759px) {
+   .aboutus {
+    display: none;
+   }
+}
